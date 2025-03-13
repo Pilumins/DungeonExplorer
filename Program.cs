@@ -10,22 +10,11 @@ namespace DungeonExplorer
     {
         static void Main(string[] args)
         {
-            try
-            {
-                Game game = new Game();
-                game.Start();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("thanks for playing Dungeon Explorer!");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-            }
+            Game game = new Game();
+            game.Start();
+            Console.WriteLine("Waiting for your Implementation");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
         }
     }
 }
-
