@@ -4,6 +4,7 @@ namespace DungeonExplorer
 {
     internal class Game
     {
+        // Fields to store the player and the current room
         private Player player;
         private Room currentRoom;
 
@@ -12,12 +13,12 @@ namespace DungeonExplorer
             // Initialize the game with one room and one player
             player = new Player("Player", 100);
 
-            Room room1 = new Room("You are in a messy dungeon.There is a diamond sword on the ground near by.");
-            Room room2 = new Room("You are in a unlit dungeon.There is a gold sword on the ground near by.");
+            Room room1 = new Room("You are in a messy dungeon.There is diamonds on the ground near by.");
+            Room room2 = new Room("You are in a unlit dungeon.There is a gold coins on the ground near by.");
             Room room3 = new Room("You are in a dark dungeon.There is a wooden sword on the ground near by.");
             
-            room1.AddItem("diamond sword");
-            room2.AddItem("gold sword");
+            room1.AddItem("diamonds");
+            room2.AddItem("gold coins");
             room3.AddItem("wooden sword");
 
             room1.AddConnectedRoom("north", room2);
@@ -45,7 +46,8 @@ namespace DungeonExplorer
               Console.WriteLine("Options: 1.'pick up [item]', 2.'inventory', 3.'move [direction]', 'exit'");
 
                 // player input
-                string input = Console.ReadLine().ToLower();
+                // code has been changed based on AZUoL's feedback(added .Trim)
+                string input = Console.ReadLine().ToLower().Trim();
 
                 // this will process the player input
                 if (input.StartsWith("pick up"))
