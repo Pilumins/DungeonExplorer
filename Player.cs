@@ -1,47 +1,44 @@
 ﻿using System.Collections.Generic;
 using System;
+using DungeonExplorer;
 
 namespace DungeonExplorer
 {
-    public class Player
+    public class Player : Creature
     {
-        // properties for players name and health
-        public string Name { get; private set; } // player name
-        public int Health { get; private set; } // player health
-        private List<string> inventory = new List<string>(); // player inventory
-     
-        public Player(string name, int health) 
+        private List<Item> inventory;
+
+        public Player(string name, int health) : base(name, health)
         {
-            // initializes the players name with their inventory and health.
-            Name = name;
-            Health = health;
-            inventory = new List<string>();
+            inventory = new List<Item>();
         }
-        // method to add an item to the players inventory
-        public void PickUpItem(string item)
+        public void PickUpItem(Item item)
         {
             inventory.Add(item);
-            Console.WriteLine($"{item} added to your inventory.");
+            Console.WriteLine($"{item.Name} added to your inventory.");
+        }
+        public Item GetItemFromInventory(string itemName)
+        {
+            return inventory.Find(item => item.Name.Equals(itemName,StringComparison.OrdinalIgnoreCase));
+        }
+        public void RemoveItemFromInventory(Item item)
+        {
+            inventory.Remove(item);
+            Console.WriteLine($" {item.Name} was removed from the inventory");
         }
 
         // method to list the contents of a players inventory
         public string InventoryContents()
         {
-            return inventory.Count > 0 ? string.Join(", ", inventory) : "Your inventory is empty.";
+            return inventory.Count > 0
+                ? string.Join(", ", inventory.ConvertAll(item => item.Name))
+                : "Your inventory is empty.";
         }
 
-        // decrease the players health
-        public void TakeDamage(int damage)
+        public override void Attack(Creature target)
         {
-            Health -= damage;
-            if (Health < 0) Health = 0;
-            Console.WriteLine($"you took {damage} damage. your current health is {Health}");
-        }
-        // method to heal player
-        public void Heal(int amount)
-        {
-            Health += amount;
-            Console.WriteLine($"you have healed {amount} health. your current health is {Health}");
+            Console.WriteLine($"{Name} attacks {target.Name}");
+            target.TakeDamage(8); // this will decrease the players health
         }
     }
 }
